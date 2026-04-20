@@ -34,7 +34,8 @@ export default async function CaseStartPage({ params }: Props) {
     .eq('case_id', caseId)
     .maybeSingle();
 
-  if (existing?.status === 'active' || existing?.status === 'completed') {
+  const existingStatus = (existing as { id: string; status: string } | null)?.status;
+  if (existingStatus === 'active' || existingStatus === 'completed') {
     redirect(`/case/${caseId}/investigate`);
   }
 
