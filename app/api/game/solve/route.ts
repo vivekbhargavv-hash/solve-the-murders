@@ -101,7 +101,7 @@ export async function POST(request: Request) {
       attempts_used: 1,
       status: 'completed',
       completed_at: new Date().toISOString(),
-      solve_result: result as Record<string, unknown>,
+      solve_result: result as unknown as import('@/lib/types/database').Json,
     })
     .eq('id', progressId);
 

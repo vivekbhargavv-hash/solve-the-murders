@@ -44,7 +44,23 @@ export type Database = {
           created_at?: string;
           updated_at?: string;
         };
-        Update: Partial<Database['public']['Tables']['cases']['Insert']>;
+        Update: {
+          id?: string;
+          title?: string;
+          difficulty?: 'easy' | 'medium' | 'hard';
+          is_free?: boolean;
+          order_index?: number;
+          setting?: string;
+          victim_name?: string;
+          victim_description?: string;
+          story_intro?: string;
+          cover_image_url?: string | null;
+          solution_killer?: string;
+          solution_motive?: string;
+          solution_method?: string;
+          created_at?: string;
+          updated_at?: string;
+        };
         Relationships: [];
       };
       suspects: {
@@ -74,7 +90,19 @@ export type Database = {
           is_killer?: boolean;
           created_at?: string;
         };
-        Update: Partial<Database['public']['Tables']['suspects']['Insert']>;
+        Update: {
+          id?: string;
+          case_id?: string;
+          name?: string;
+          role?: string;
+          description?: string;
+          personality?: string;
+          knowledge_base?: Json;
+          hidden_truths?: Json;
+          reveal_conditions?: Json;
+          is_killer?: boolean;
+          created_at?: string;
+        };
         Relationships: [
           {
             foreignKeyName: 'suspects_case_id_fkey';
@@ -106,7 +134,16 @@ export type Database = {
           task_type?: string | null;
           created_at?: string;
         };
-        Update: Partial<Database['public']['Tables']['evidence']['Insert']>;
+        Update: {
+          id?: string;
+          case_id?: string;
+          type?: 'physical' | 'testimonial' | 'documentary' | 'forensic';
+          content?: string;
+          relevance_score?: number;
+          is_red_herring?: boolean;
+          task_type?: string | null;
+          created_at?: string;
+        };
         Relationships: [];
       };
       user_case_progress: {
@@ -132,7 +169,17 @@ export type Database = {
           completed_at?: string | null;
           solve_result?: Json | null;
         };
-        Update: Partial<Database['public']['Tables']['user_case_progress']['Insert']>;
+        Update: {
+          id?: string;
+          user_id?: string;
+          case_id?: string;
+          points_remaining?: number;
+          status?: 'active' | 'completed' | 'failed';
+          attempts_used?: number;
+          started_at?: string;
+          completed_at?: string | null;
+          solve_result?: Json | null;
+        };
         Relationships: [];
       };
       facts: {
@@ -154,7 +201,15 @@ export type Database = {
           relevance_score?: number;
           discovered_at?: string;
         };
-        Update: Partial<Database['public']['Tables']['facts']['Insert']>;
+        Update: {
+          id?: string;
+          user_id?: string;
+          case_id?: string;
+          fact_text?: string;
+          source?: string;
+          relevance_score?: number;
+          discovered_at?: string;
+        };
         Relationships: [];
       };
       chat_logs: {
@@ -176,7 +231,15 @@ export type Database = {
           role: 'user' | 'ai';
           created_at?: string;
         };
-        Update: Partial<Database['public']['Tables']['chat_logs']['Insert']>;
+        Update: {
+          id?: string;
+          user_id?: string;
+          case_id?: string;
+          character?: string;
+          message?: string;
+          role?: 'user' | 'ai';
+          created_at?: string;
+        };
         Relationships: [];
       };
       payments: {
@@ -202,7 +265,17 @@ export type Database = {
           created_at?: string;
           updated_at?: string;
         };
-        Update: Partial<Database['public']['Tables']['payments']['Insert']>;
+        Update: {
+          id?: string;
+          user_id?: string;
+          stripe_session_id?: string | null;
+          stripe_customer_id?: string | null;
+          status?: 'pending' | 'succeeded' | 'failed';
+          access_level?: 'free' | 'full';
+          amount_cents?: number | null;
+          created_at?: string;
+          updated_at?: string;
+        };
         Relationships: [];
       };
       profiles: {
@@ -222,14 +295,29 @@ export type Database = {
           created_at?: string;
           updated_at?: string;
         };
-        Update: Partial<Database['public']['Tables']['profiles']['Insert']>;
+        Update: {
+          id?: string;
+          email?: string;
+          display_name?: string | null;
+          access_level?: 'free' | 'full';
+          created_at?: string;
+          updated_at?: string;
+        };
         Relationships: [];
       };
     };
-    Views: Record<string, never>;
-    Functions: Record<string, never>;
-    Enums: Record<string, never>;
-    CompositeTypes: Record<string, never>;
+    Views: {
+      [_ in never]: never;
+    };
+    Functions: {
+      [_ in never]: never;
+    };
+    Enums: {
+      [_ in never]: never;
+    };
+    CompositeTypes: {
+      [_ in never]: never;
+    };
   };
 };
 

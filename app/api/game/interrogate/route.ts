@@ -66,7 +66,7 @@ export async function POST(request: Request) {
     .maybeSingle();
 
   if (suspect) {
-    characterData = suspect as typeof characterData;
+    characterData = suspect as unknown as typeof characterData;
   } else {
     // Fixed roles (police, coroner, first_witness, ballistics)
     const { data: roleChar } = await supabase
@@ -77,7 +77,7 @@ export async function POST(request: Request) {
       .maybeSingle();
 
     if (roleChar) {
-      characterData = roleChar as typeof characterData;
+      characterData = roleChar as unknown as typeof characterData;
     }
   }
 

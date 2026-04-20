@@ -140,7 +140,13 @@ export async function saveChatMessage(params: {
   role: 'user' | 'ai';
 }) {
   const supabase = await createClient();
-  const { error } = await supabase.from('chat_logs').insert(params);
+  const { error } = await supabase.from('chat_logs').insert({
+    user_id: params.userId,
+    case_id: params.caseId,
+    character: params.character,
+    message: params.message,
+    role: params.role,
+  });
   if (error) throw new Error(error.message);
 }
 
@@ -227,7 +233,7 @@ export async function submitSolve(
       attempts_used: 1,
       status: 'completed',
       completed_at: new Date().toISOString(),
-      solve_result: result as Record<string, unknown>,
+      solve_result: result as unknown as import('@/lib/types/database').Json,
     })
     .eq('id', progressId);
 
