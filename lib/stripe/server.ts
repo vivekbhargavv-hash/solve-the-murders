@@ -1,14 +1,16 @@
 import Stripe from 'stripe';
 
-if (!process.env.STRIPE_SECRET_KEY) {
-  throw new Error('STRIPE_SECRET_KEY is not set');
+function getStripe(): Stripe {
+  if (!process.env.STRIPE_SECRET_KEY) {
+    throw new Error('STRIPE_SECRET_KEY is not set');
+  }
+  return new Stripe(process.env.STRIPE_SECRET_KEY, {
+    apiVersion: '2025-02-24.acacia',
+  });
 }
 
-export const stripe = new Stripe(process.env.STRIPE_SECRET_KEY, {
-  apiVersion: '2025-02-24.acacia',
-});
-
 export async function createCheckoutSession(userId: string, userEmail: string) {
+  const stripe = getStripe();
   const session = await stripe.checkout.sessions.create({
     mode: 'payment',
     payment_method_types: ['card'],
@@ -27,4 +29,8 @@ export async function createCheckoutSession(userId: string, userEmail: string) {
   });
 
   return session;
+}
+
+export function getStripeInstance(): Stripe {
+  return getStripe();
 }
