@@ -18,9 +18,8 @@ export default function LoginPage() {
   const [error, setError] = useState('');
   const [magicSent, setMagicSent] = useState(false);
 
-  const supabase = createClient();
-
   async function handlePasswordLogin(e: React.FormEvent) {
+    const supabase = createClient();
     e.preventDefault();
     setError('');
     setLoading(true);
@@ -44,6 +43,7 @@ export default function LoginPage() {
     }
     setError('');
     setLoading(true);
+    const supabase = createClient();
 
     const { error } = await supabase.auth.signInWithOtp({
       email,

@@ -14,9 +14,8 @@ export default function RegisterPage() {
   const [error, setError] = useState('');
   const [success, setSuccess] = useState(false);
 
-  const supabase = createClient();
-
   async function handleRegister(e: React.FormEvent) {
+    const supabase = createClient();
     e.preventDefault();
     setError('');
 
